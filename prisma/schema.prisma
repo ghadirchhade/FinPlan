@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl= env("DIRECT_URL")
+}
+
+
+//users table
+model User{ 
+  id             String      @id @default(uuid()) //pk+auto-increment
+  clerkUserId    String      @unique
+  email          String      @unique
+  name           String?     //optional(can be null)
+  imageUrl       String?
+  transactions   Transaction[] //1 to many relationship (each user can have several transactions)
+  accounts       Account[]
+  budgets        Budget[]
+  createdAt      DateTime     @default(now()) //Automatically set to the current time when the record is created
+  updatedAt      DateTime     @updatedAt //it automatically updates the field's value to the current timestamp (NOW()) every time the row is updated using Prisma
+
+  @@map("users")//corresponds to a table called users in the database
+}
+
+//accounts table
+model Account{ 
+  id             String      @id @default(uuid()) //pk+auto-increment
+  name           String      
+  type           AccountType      
+  balance        Decimal     @default(0)//will ask initial balance while creating an account
+  isDefault      Boolean     @default(false)
+  userId         String
+  user           User        @relation(fields: [userId],references:[id],onDelete:Cascade) // If the user is deleted, all their accounts are also deleted automatically
+  transactions   Transaction[]
+  createdAt      DateTime     @default(now()) //Automatically set to the current time when the record is created
+  updatedAt      DateTime     @updatedAt //it automatically updates the field's value to the current timestamp (NOW()) every time the row is updated using Prisma
+
+  @@index([userId]) //faster,The database can quickly jump to the rows that match
+  @@map("accounts")//corresponds to a table called accounts in the database
+}
+
+enum AccountType{
+  CURRENT
+  SAVINGS
+}
+
+model Transaction{
+  id                   String               @id @default(uuid())      
+  type                 TransactionType
+  amount               Decimal
+  description          String?
+  date                 DateTime
+  category             String
+  receiptUrl           String?
+  isRecurring          Boolean              @default(false) 
+  recurringInterval    RecurringInterval?  //used if isRecurring is true
+  nextRecurringDate    DateTime? 
+  lastProcessed        DateTime?
+  status               TransactionStatus     @default(COMPLETED)
+  userId               String
+  user                 User                  @relation(fields:[userId],references:[id],onDelete:Cascade)
+  accountId            String
+  account              Account               @relation(fields:[accountId],references:[id],onDelete:Cascade)
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+
+  @@index([userId])
+  @@index([accountId])
+  @@map("transactions")
+}
+
+enum TransactionType{
+  INCOME
+  EXPENSE
+}
+
+enum RecurringInterval{
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+enum TransactionStatus{
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+model Budget{
+  id              String          @id @default(uuid())  
+  amount          Decimal  
+  lastAlertSent   DateTime?      //track when the last alert was sent
+  userId          String          @unique
+  user            User            @relation(fields:[userId],references:[id],onDelete:Cascade)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([userId])
+  @@map("budgets")
+}
+
