@@ -5,6 +5,7 @@ import {
     CreditCard,
     Globe,
     Zap,
+    Wallet,
   } from "lucide-react";
   
   // Stats Data
@@ -52,9 +53,9 @@ import {
       description: "Manage multiple accounts",
     },
     {
-      icon: <Globe className="h-8 w-8 text-blue-600" />,
-      title: "Multi-Currency",
-      description: "Support for multiple currencies with real-time conversion",
+      icon:<Wallet className="h-8 w-8 text-blue-600" />,
+      title: "Spending Tracking",
+      description: "Automatically categorize and track your transactions in real-time",
     },
     {
       icon: <Zap className="h-8 w-8 text-blue-600" />,
@@ -107,6 +108,6 @@ import {
       role: "Financial Advisor",
       image: "https://randomuser.me/api/portraits/women/74.jpg",
       quote:
-        "I recommend FinPlan to all my clients. The multi-currency support and detailed analytics make it perfect for international investors.",
+        "I recommend FinPlan to all my clients. The AI insights and detailed analytics make it perfect for international investors.",
     },
   ];
