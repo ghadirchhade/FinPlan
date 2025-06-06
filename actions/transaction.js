@@ -149,7 +149,9 @@ export async function scanReceipt(file){
             - Date (in ISO format) 
             - Description or items purchased (brief summary)
             - Merchant/store name
-            - Suggested category (one of: housing,transportation,groceries,utilities,entertainment,food,shopping,healthcare,education,personal,travel,insurance,gifts,bills,other-expense )
+            - Suggested category (one of: housing,transportation,groceries,utilities,
+            entertainment,food,shopping,healthcare,education,personal,travel,
+            insurance,gifts,bills,other-expense )
             
             Only respond with valid JSON in this exact format:
             {
