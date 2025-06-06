@@ -91,14 +91,14 @@ import {
     {
       name: "Sarah Johnson",
       role: "Small Business Owner",
-      image: "public/user1",
+      image: "public/user1.jpg",
       quote:
         "FinPlan has transformed how I manage my business finances. The AI insights have helped me identify cost-saving opportunities I never knew existed.",
     },
     {
       name: "Michael Chen",
       role: "Freelancer",
-      image: "public/user2",
+      image: "public/user2.jpg",
       quote:
         "The receipt scanning feature saves me hours each month. Now I can focus on my work instead of manual data entry and expense tracking.",
     },
@@ -106,7 +106,7 @@ import {
     {
       name: "Emily Rodriguez",
       role: "Financial Advisor",
-      image: "/public/user3",
+      image: "/public/user3.jpg",
       quote:
         "I recommend FinPlan to all my clients. The AI insights and detailed analytics make it perfect for international investors.",
     },
