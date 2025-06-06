@@ -91,7 +91,7 @@ import {
     {
       name: "Sarah Johnson",
       role: "Small Business Owner",
-      image: "/user4.jpg",
+      image: "/user1.jpg",
       quote:
         "FinPlan has transformed how I manage my business finances. The AI insights have helped me identify cost-saving opportunities I never knew existed.",
     },
